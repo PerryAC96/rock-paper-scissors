@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>RockPaperScissors</title>
+</head>
+<body>
+  
+  <!-- CSS goes here for now -->
+  
+  <style> 
+    body{
+      background-image:linear-gradient(to right, #434343 0%, black 100%);
+    }
+    .bordered-text{
+      border: 5px solid white;
+      padding: 10px;
+    }
+    .bordered-text2{
+      border: 3px solid white;
+      padding: 10px;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      
+    }
+    h1{
+      text-align:center;
+      color: white;
+      font-family: 'Courier New', mono-space;
+    }
+    h2{
+      text-align:center;
+      color:white;
+      font-family: 'Courier New', monospace;
+    }
+    
+    .container-btn{
+      display:flex;
+      justify-content: center;
+      align-items:center;
+      flex-direction:column;
+    }
+    .container1{
+      display:flex;
+      justify-content:center;
+      align-items: center;
+      flex-direction:column;
+      
+      
+    }
+    .header-img img{
+      margin-right:auto;
+      width: 84px;
+      height: 84px;
+    }
+     .button{
+      padding:10px 20px;
+      font-size: 16px;
+      border-radius: 5px;
+      background-color:white;
+      color:black;
+      align-items: center;
+      justify-content: center;
+      display:flex;   
+      text-align:center;
+      margin:8px;
+      width:200px;
+      font-family: 'Courier New', monospace;
+      flex-direction:column;
+      font-weight: bold;
+    }
+    .button:hover{
+      color: pink;
+      background-color:black;
+    }
+    #display-area{
+      margin-top: 10px;
+      padding:20px;
+      background-color: white;
+      color:black;
+      border-radius: 20px;
+      text-align:center;
+      font-family: 'Courier New', monospace;
+    }
+    .footer{
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      width: 100%;
+      padding: 20px;
+      text-align: center;
+      font-family:'Courier New', monospace;
+      color: white;
+    }
+  </style>
+    <!-- lets figure out how to make this header and title-->
+  <div class="container">
+  <nav class="navbar">
+    <div class="header-img">
+      <img src="platypus.png" alt="platypus logo">
+    </div>
+    <div class="container1">
+      <h1 class="bordered-text">ROCK PAPER SCISSORS</h1>
+      <div class="container-btn">
+        <h2 class="bordered-text2">LETS BATTLE</h2>
+        <!-- time for some buttons -->
+        <button class="button" id="paper">PAPER</button>
+        <button class="button" id="rock">ROCK</button>
+        <button class="button" id="scissors">SCISSORS</button>
+        <div id="display-area"></div>
+      </div>
+    </div>
+  </nav>
+</div>
+  <div class ="footer">
+    <p>Copyright © The Odin Project - Alexander C. Perry(PlatypusCreations)</p>
+  </div>
+  <script>
+  const rockButton = document.querySelector('#rock');
+rockButton.addEventListener('click', () => {
+  playRound('rock');
+});
+
+function game() {
+  let playerScore = 0;
+  let computerScore = 0;
+  let round = 0;
+  const maxRounds = 5;
+
+  const rockButton = document.querySelector('#rock');
+  const paperButton = document.querySelector('#paper');
+  const scissorsButton = document.querySelector('#scissors');
+
+  rockButton.addEventListener('click', () => {
+    playRound('rock');
+  });
+  paperButton.addEventListener('click', () => {
+    playRound('paper');
+  });
+  scissorsButton.addEventListener('click', () => {
+    playRound('scissors');
+  });
+
+  function playRound(playerSelection) {
+    const computerSelection = computerPlay();
+    let result;
+
+    if (playerSelection === computerSelection) {
+      result = "It's a tie!";
+    } else if (
+      (playerSelection === 'rock' && computerSelection === 'scissors') ||
+      (playerSelection === 'paper' && computerSelection === 'rock') ||
+      (playerSelection === 'scissors' && computerSelection === 'paper')
+    ) {
+      result = `You win! ${playerSelection} beats ${computerSelection}`;
+      playerScore++;
+    } else {
+      result = `You lose! ${computerSelection} beats ${playerSelection}`;
+      computerScore++;
+    }
+
+    round++;
+
+    const displayArea = document.querySelector('#display-area');
+    displayArea.textContent = result;
+
+    if (round === maxRounds) {
+      if (playerScore > computerScore) {
+        displayArea.textContent = "Congratulations, you win!";
+      } else if (playerScore < computerScore) {
+        displayArea.textContent = "Sorry, you lose!";
+      } else {
+        displayArea.textContent = "It's a tie!";
+      }
+    }
+  }
+
+  function computerPlay() {
+    const choices = ['rock', 'paper', 'scissors'];
+    const randomIndex = Math.floor(Math.random() * choices.length);
+    return choices[randomIndex];
+  }
+}
+
+game();
+    
+  </script>
+
+
+
+       
+
+ 
+</body>
+</html>
